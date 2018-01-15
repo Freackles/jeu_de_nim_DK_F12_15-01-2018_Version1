@@ -1,0 +1,53 @@
+Algo jeu_nim_ver2
+
+BUT: recréer le jeu de nim
+PRINCIPE: le perdant est celui qui retire la dernière allumette. Chaque joueur peut retirer jusqu'à 3 allumettes par tour
+ENTREES: joueur1, joueur2
+SORTIE: le nombre d'allumettes restant, joueur gagnant
+
+CONST:
+	ALLU_MAX = 3 // Nombre maxi d'allumettes que l'on peut retirer
+	ALLU_MIN = 1 // Nombre minimum d'allumette que l'on puisse retirer
+
+VAR:
+	nb_allu, tour: entier // nb_allu -> nombre d'allumettes; tour -> compteur de tour;
+	retirer, test : entier //retirer -> allumettes retirer; test 
+
+
+
+DEBUT:
+	//Initialisation:
+	tour <- 1
+	nb_allu <- 21
+	retirer <- 0
+
+	REPETER
+		SI (tour MOD 2=0) ALORS
+			ECRIRE: "Au tour du joueur 2 (ordi)"
+			//Permet à l'ordi de faire le meilleur coup possible
+			REPETER
+				retirer <- aleatoire(1,3)
+				test <- nb_allu - retirer
+			JUSQU'A ((test MOD 4)+1 = 0)
+		SINON
+			ECRIRE: "Au tour du joueur 1"
+			REPETER
+				ECRIRE "Combien d'allumette vous retirez ?"
+				LIRE  retirer
+			JUSQUA (retirer > ALLU_MAX) OU (retirer < ALLU_MIN)
+		FINSI
+
+		nb_allu <- nb_allu - retirer
+		ECRIRE "Il reste ", nb_allu, " Allumettes"
+		tour <- tour+1
+
+	JUSQU'A (nb_allu <= 1)
+
+
+	// Annonce des resultats
+	SI (tour-1 MOD 2=0) ALORS
+		ECRIRE "Joueur 1 a Gagner"
+	SINON
+		ECRIRE "Joueur 2 a gagné"
+	FINSI
+FIN
